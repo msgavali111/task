@@ -1,22 +1,54 @@
-document.addEventListener('DOMContentLoaded', function() {
-    var component = document.querySelector('.disclosure-list');
-    var disclosureList = component.getAttribute('data-disclosureList');
-    buildDisclosureTable(disclosureList);
-});
+<sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html">
+  <sly data-sly-call="${clientlib.all @ categories='globalfooteractionlinks'}">
+  </sly> 
+</sly>
 
-function buildDisclosureTable(disclosureList) {
-    var items = disclosureList.split(',');
 
-    var tbody = document.getElementById('disclosure-tbody');
+<div class="footer-action-link" data-sly-use.model="com.site.myproj.core.models.GlobalFooterActionLinks">
 
-    for (var i = 0; i < items.length; i++) {
-        if (i % 3 === 0) {
-            var row = tbody.insertRow();
-        }
+	<div class="text-center">
+    	<ul>        	
+                <li class="li">
+                    <a href="http://localhost:4502/editor.html/content/mysite/us/en/home.html">
+                        Locations
+                    </a>
+                </li>
+  				<li class="li">
+                    <a href="${item.actionLinkPath}">
+						Contact Us
+                    </a>
+                </li>
+  				<li class="li">
+                    <a href="${item.actionLinkPath}">
+                        Location
+                    </a>
+                </li>
+  				<li class="li">
+                    <a href="${item.actionLinkPath}">
+                        Help & Support
+                    </a>
+                </li>
+  				<li class="li">
+                    <a href="${item.actionLinkPath}">
+                        Accessible Banking
+                    </a>
+                </li>
+  				<li class="li">
+                    <a href="${item.actionLinkPath}">
+                        Security
+                    </a>
+                </li>
+  				<li class="li">
+                    <a href="${item.actionLinkPath}">
+                        Online Banking Servive Agreement
+                    </a>
+                </li>
 
-        var cell = row.insertCell();
-        var span = document.createElement('span');
-        span.textContent = items[i].trim();
-        cell.appendChild(span);
-    }
-}
+		</ul>
+    </div>  
+
+</div>
+
+<sly data-sly-use.template="core/wcm/components/commons/v1/templates.html"
+	data-sly-call="${template.placeholder @ isEmpty=!exists}">
+</sly>
