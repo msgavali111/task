@@ -6,44 +6,15 @@
 
 <div class="footer-action-link" data-sly-use.model="com.site.myproj.core.models.GlobalFooterActionLinks">
 
-	<div class="text-center">
-    	<ul>        	
+	<div class="text-center">    
+    	<ul>
+        	<sly data-sly-list="${model.actionLinkItems}">
                 <li class="li">
-                    <a href="http://localhost:4502/editor.html/content/mysite/us/en/home.html">
-                        Locations
+                    <a href="${item.actionLinkPath}.html">
+    			${item.actionLinkTitle}
                     </a>
                 </li>
-  				<li class="li">
-                    <a href="${item.actionLinkPath}">
-						Contact Us
-                    </a>
-                </li>
-  				<li class="li">
-                    <a href="${item.actionLinkPath}">
-                        Location
-                    </a>
-                </li>
-  				<li class="li">
-                    <a href="${item.actionLinkPath}">
-                        Help & Support
-                    </a>
-                </li>
-  				<li class="li">
-                    <a href="${item.actionLinkPath}">
-                        Accessible Banking
-                    </a>
-                </li>
-  				<li class="li">
-                    <a href="${item.actionLinkPath}">
-                        Security
-                    </a>
-                </li>
-  				<li class="li">
-                    <a href="${item.actionLinkPath}">
-                        Online Banking Servive Agreement
-                    </a>
-                </li>
-
+             </sly>     
 		</ul>
     </div>  
 
