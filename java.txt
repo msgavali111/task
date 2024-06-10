@@ -1,0 +1,100 @@
+package com.site.myproj.core.models;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ResourceResolver;
+import org.apache.sling.api.resource.ValueMap;
+import org.apache.sling.models.annotations.DefaultInjectionStrategy;
+import org.apache.sling.models.annotations.Model;
+import org.apache.sling.models.annotations.Optional;
+import org.apache.sling.models.annotations.injectorspecific.Self;
+import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.annotation.PostConstruct;
+import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
+
+@Model(adaptables = Resource.class, defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL)
+public class GlobalFooterActionLinks {
+
+    private static final Logger LOG = LoggerFactory.getLogger(GlobalFooterActionLinks.class);
+
+    @Self
+    private Resource resource;
+
+    @ValueMapValue
+    @Optional
+    private String contentFragmentPath;
+
+    private List<ActionLinkItem> actionLinkItems;
+
+    @PostConstruct
+    protected void init() {
+        LOG.debug("Initializing MyComponentModel with contentFragmentPath: {}", contentFragmentPath);
+        if (contentFragmentPath != null && !contentFragmentPath.isEmpty()) {
+            ResourceResolver resourceResolver = resource.getResourceResolver();
+            Resource cfResource = resourceResolver.getResource(contentFragmentPath + "/jcr:content/data/master");
+            if (cfResource != null) {
+                LOG.debug("Content fragment resource found: {}", cfResource.getPath());
+                ValueMap valueMap = cfResource.getValueMap();
+                String[] jsonItems = valueMap.get("actionLinkItems", String[].class);
+                LOG.debug("actionLinkItems property found: {}", (Object) jsonItems);
+                if (jsonItems != null) {
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    try {
+                        // Join the JSON array items into a single JSON array string
+                        String jsonArrayString = "[" + String.join(",", jsonItems) + "]";
+                        LOG.debug("jsonArrayString: {}", jsonArrayString);
+                        actionLinkItems = objectMapper.readValue(jsonArrayString, new TypeReference<List<ActionLinkItem>>() {});
+                        LOG.debug("Parsed actionLinkItems: {}", actionLinkItems);
+                    } catch (IOException e) {
+                        LOG.error("Error parsing JSON array", e);
+                    }
+                } else {
+                    LOG.warn("actionLinkItems property is null or empty");
+                }
+            } else {
+                LOG.warn("Content fragment resource not found at path: {}", contentFragmentPath + "/jcr:content/data/master");
+            }
+        } else {
+            LOG.warn("contentFragmentPath is null or empty");
+        }
+    }
+
+    public List<ActionLinkItem> getActionLinkItems() {
+        return actionLinkItems != null ? actionLinkItems : Collections.emptyList();
+    }
+
+    public static class ActionLinkItem {
+        private String actionLinkTitle;
+        private String actionLinkPath;
+
+        public String getActionLinkTitle() {
+            return actionLinkTitle;
+        }
+
+        public void setActionLinkTitle(String actionLinkTitle) {
+            this.actionLinkTitle = actionLinkTitle;
+        }
+
+        public String getActionLinkPath() {
+            return actionLinkPath;
+        }
+
+        public void setActionLinkPath(String actionLinkPath) {
+            this.actionLinkPath = actionLinkPath;
+        }
+
+        @Override
+        public String toString() {
+            return "ActionLinkItem{" +
+                    "actionLinkTitle='" + actionLinkTitle + '\'' +
+                    ", actionLinkPath='" + actionLinkPath + '\'' +
+                    '}';
+        }
+    }
+}
