@@ -1,10 +1,10 @@
-.footer-action-link{
-    color: #fff;  
+.footer-action-link {
+    color: #fff;
     background-color: #012169;
-	font-size: 14px;
+    font-size: 14px;
     width: 100%;
-	height: 150px;    
-    font-family: "roboto-regular",Arial,Helvetica,sans-serif;
+    height: 150px;
+    font-family: "roboto-regular", Arial, Helvetica, sans-serif;
 }
 
 .text-center {
@@ -21,27 +21,74 @@
 .footer-action-link .li {
     display: inline;
     list-style-type: none;
-}  
+}
 
 .footer-action-link .li a {
-	color: #fff;
+    color: #fff;
     display: inline-block;
     margin-bottom: 2px;
     white-space: nowrap;
-	text-decoration: none;
-}     
+    text-decoration: none;
+}
 
-.footer-action-link .li a:hover{
-	text-decoration: underline;
-}                        
+.footer-action-link .li a:hover {
+    text-decoration: underline;
+}
 
 .footer-action-link .li::after {
     background-image: url('/content/dam/mysite/separator.svg');
     background-position: 50%;
     background-repeat: no-repeat;
-	padding: 0px 1px 18px 1px;
+    padding: 0px 1px 18px 1px;
     content: " ";
     letter-spacing: 1.8em;
     display: inline-block;
     margin: 0px 7px -3px 7px;
-}                        
+}
+
+.footer-action-link .li:last-child::after {
+    content: none;
+}
+
+/* Responsive styles */
+@media (max-width: 1200px) {
+    .footer-action-link ul {
+        padding: 0px 70px;
+    }
+}
+
+@media (max-width: 992px) {
+    .footer-action-link ul {
+        padding: 0px 50px;
+    }
+}
+
+@media (max-width: 768px) {
+    .footer-action-link {
+        height: auto;
+        padding: 10px 0;
+    }
+
+    .footer-action-link ul {
+        padding: 0px 30px;
+    }
+
+    .footer-action-link .li {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .footer-action-link .li::after {
+        content: none;
+    }
+}
+
+@media (max-width: 576px) {
+    .footer-action-link ul {
+        padding: 0px 15px;
+    }
+
+    .footer-action-link .li a {
+        font-size: 12px;
+    }
+}
