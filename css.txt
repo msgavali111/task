@@ -1,10 +1,11 @@
 .footer-action-link {
     color: #fff;
     background-color: #012169;
-    font-size: 14px;
+    font-size: 16px;
     width: 100%;
     height: 150px;
-    font-family: "roboto-regular", Arial, Helvetica, sans-serif;
+    font-family: Roboto;
+    text-align: center;
 }
 
 .text-center {
@@ -15,12 +16,16 @@
 .footer-action-link ul {
     line-height: 20px;
     margin-left: 0;
-    padding: 0px 90px 0px 91px;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .footer-action-link .li {
-    display: inline;
+    display: inline-flex;
     list-style-type: none;
+    align-items: center;
 }
 
 .footer-action-link .li a {
@@ -39,11 +44,10 @@
     background-image: url('/content/dam/mysite/separator.svg');
     background-position: 50%;
     background-repeat: no-repeat;
-    padding: 0px 1px 18px 1px;
+    padding: 0px 0px 16px 1px;
     content: " ";
-    letter-spacing: 1.8em;
     display: inline-block;
-    margin: 0px 7px -3px 7px;
+    margin: 0px 9px 3px 9px;
 }
 
 .footer-action-link .li:last-child::after {
@@ -53,13 +57,13 @@
 /* Responsive styles */
 @media (max-width: 1200px) {
     .footer-action-link ul {
-        padding: 0px 70px;
+        padding: 0;
     }
 }
 
 @media (max-width: 992px) {
     .footer-action-link ul {
-        padding: 0px 50px;
+        padding: 0;
     }
 }
 
@@ -70,25 +74,25 @@
     }
 
     .footer-action-link ul {
-        padding: 0px 30px;
+        padding: 0 30px;
     }
 
     .footer-action-link .li {
-        display: block;
+        display: flex;
         margin-bottom: 10px;
     }
 
     .footer-action-link .li::after {
-        content: none;
+        content: " ";
     }
 }
 
 @media (max-width: 576px) {
     .footer-action-link ul {
-        padding: 0px 15px;
+        padding: 0 15px;
     }
 
     .footer-action-link .li a {
-        font-size: 12px;
+        font-size: 16px;
     }
 }
