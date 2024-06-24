@@ -1,23 +1,30 @@
 <sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html">
-  <sly data-sly-call="${clientlib.all @ categories='globalfooteractionlinks'}">
+  <sly data-sly-call="${clientlib.all @ categories='xbrltable'}">
   </sly> 
 </sly>
 
-
-<div class="footer-action-link" data-sly-use.model="com.site.myproj.core.models.GlobalFooterActionLinks">
-
-	<div class="text-center">    
-    	<ul>
-        	<sly data-sly-list="${model.actionLinkItems}">
-                <li class="li">
-                    <a href="${item.actionLinkPath}.html">
-    			${item.actionLinkTitle}
-                    </a>
-                </li>
-             </sly>     
-		</ul>
-    </div>  
-
+<div class="table-container">
+        <table id="keywordTable">
+            <thead>
+                <tr>
+                    <th>Sr. No.</th>
+                    <th>Keyword</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody class="tbody" id="tableBody" data-sly-use.model="com.site.myproj.core.models.MultifieldXBRLTableModel">
+                <sly data-sly-list.item="${model.xbrlTableDetails}">
+                    <tr class="hidden">      					
+                        <td>${itemList.index}</td>
+                        <td>${item.xbrlTableTitle}</td>
+                        <td>${item.xbrlTableDescription}</td>
+                    </tr>
+                </sly>
+            </tbody>
+        </table>
+        <div class="button-container">
+        	<button id="loadMoreBtn">VIEW ALL</button>
+        </div>
 </div>
 
 <sly data-sly-use.template="core/wcm/components/commons/v1/templates.html"
