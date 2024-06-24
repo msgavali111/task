@@ -1,69 +1,59 @@
-package com.site.myproj.core.models;
+package com.site.myproj.core.models.impl;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.site.myproj.core.models.MultifieldXBRLTableModel;
+import com.site.myproj.core.models.MultifieldXBRLTableModel;
+import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
-import org.apache.sling.api.resource.ResourceResolver;
-import org.apache.sling.api.resource.ValueMap;
+import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.DefaultInjectionStrategy;
 import org.apache.sling.models.annotations.Model;
-import org.apache.sling.models.annotations.Optional;
-import org.apache.sling.models.annotations.injectorspecific.Self;
-import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
+import org.apache.sling.models.annotations.Via;
+import org.apache.sling.models.annotations.injectorspecific.SlingObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import javax.annotation.PostConstruct;
-import java.io.IOException;
-import java.util.Collections;
+import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-@Model(adaptables = Resource.class, defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL)
-public class GlobalFooterActionLinks {
+@Model(
+      adaptables = SlingHttpServletRequest.class,
+      adapters = MultifieldXBRLTableModel.class,
+      defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL
+)
 
-    @Self
-    private Resource resource;
+public class MultifieldXBRLTableImpl implements MultifieldXBRLTableModel {
 
-    @ValueMapValue
-    @Optional
-    private String contentFragmentPath;
+    private static final Logger LOG = LoggerFactory.getLogger(MultifieldXBRLTableImpl.class);
 
-    private List<ActionLinkItem> actionLinkItems;
+    @SlingObject
+    private Resource componentResource;
 
-    @PostConstruct
-    protected void init() {
-        // Ensure the content fragment path is provided and not empty
-        if (contentFragmentPath != null && !contentFragmentPath.isEmpty()) {
-            ResourceResolver resourceResolver = resource.getResourceResolver();
-            Resource cfResource = resourceResolver.getResource(contentFragmentPath + "/jcr:content/data/master");
+    @Override
+    public List<Map<String, String>> getXbrlTableDetails() {
 
-            // Proceed if the content fragment resource is found
-            if (cfResource != null) {
-                ValueMap valueMap = cfResource.getValueMap();
-                String[] jsonItems = valueMap.get("actionLinkItems", String[].class);
+        List<Map<String,String>> xbrlTableDetailsMap = new ArrayList<>();
+        try{
+            LOG.debug("Component Resource>> {}", componentResource.getPath());
+            Resource xbrlTableParentNode = componentResource.getChild("xbrlTableDetails");
+            LOG.debug("xbrlTableParentNode >> {}", xbrlTableParentNode);
+            if(xbrlTableParentNode != null){
+                for( Resource xbrlTableItem : xbrlTableParentNode.getChildren()){
 
-                // Proceed if the actionLinkItems property is found
-                if (jsonItems != null) {
-                    ObjectMapper objectMapper = new ObjectMapper();
-                    try {
-                        // Join the JSON array items into a single JSON array string
-                        String jsonArrayString = "[" + String.join(",", jsonItems) + "]";
-                        actionLinkItems = objectMapper.readValue(jsonArrayString, new TypeReference<List<ActionLinkItem>>() {});
-                    } catch (IOException e) {
-                        // Handle JSON parsing exceptions
-                        handleJsonParsingException(e);
-                    }
+                    Map<String, String> tableMap = new HashMap<>();
+
+                    tableMap.put("xbrlTableTitle",xbrlTableItem.getValueMap().get("xbrlTableTitle", String.class));
+                    tableMap.put("xbrlTableDescription",xbrlTableItem.getValueMap().get("xbrlTableDescription", String.class));
+
+                    xbrlTableDetailsMap.add(tableMap);
                 }
             }
+        }catch ( Exception e){
+            LOG.debug("<< Error occured during MultifieldXBRLTableImpl Implementation >> {}", e.getMessage());
         }
-    }
 
-    // Returns the list of action link items, or an empty list if none are found
-    public List<ActionLinkItem> getActionLinkItems() {
-        return actionLinkItems != null ? actionLinkItems : Collections.emptyList();
-    }
-
-    // Method to handle JSON parsing exceptions
-    private void handleJsonParsingException(IOException e) {
-        // Custom error handling logic (e.g., logging, alerting, etc.)
-        throw new RuntimeException("Error parsing JSON array", e);
+        return xbrlTableDetailsMap;
     }
 }
