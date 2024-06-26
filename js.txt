@@ -1,33 +1,9 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const tableRows = document.querySelectorAll('#keywordTable tbody tr');
-    const loadMoreBtn = document.getElementById('loadMoreBtn');
+package com.site.myproj.core.models;
 
-    // Initially hide all rows and only show the first 10
-    tableRows.forEach((row, index) => {
-        // Update the Sr. No. column to start from 1
-        const indexCell = row.cells[0];
-        indexCell.textContent = index + 1;
+import java.util.List;
+import java.util.Map;
 
-        if (index < 10) {
-            row.style.display = 'table-row';
-        } else {
-            row.style.display = 'none';
-        }
-    });
+public interface XBRLFilingComponentModel {
 
-    // Display the "View More" button only if there are more than 10 rows
-    if (tableRows.length > 10) {
-        loadMoreBtn.style.display = 'block';
-    }
-
-    // Function to show all rows (for "View More" functionality)
-    function showAllRows() {
-        tableRows.forEach(row => {
-            row.style.display = 'table-row'; // Ensure rows are visible
-        });
-        loadMoreBtn.style.display = 'none'; // Hide the "View More" button
-    }
-
-    // Event listener for "View More" button
-    loadMoreBtn.addEventListener('click', showAllRows);
-});
+    List<Map<String,String>> getXbrlCardDetails();
+}
