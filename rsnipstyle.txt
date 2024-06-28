@@ -1,30 +1,16 @@
 <sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html">
-  <sly data-sly-call="${clientlib.all @ categories='xbrltable'}">
+  <sly data-sly-call="${clientlib.all @ categories='xbrlDocList'}">
   </sly> 
 </sly>
 
-<div class="table-container">
-        <table id="keywordTable">
-            <thead>
-                <tr>
-                    <th>Sr. No.</th>
-                    <th>Keyword</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody class="tbody" id="tableBody" data-sly-use.model="com.site.myproj.core.models.MultifieldXBRLTableModel">
-                <sly data-sly-list.item="${model.xbrlTableDetails}">
-                    <tr class="hidden">      					
-                        <td>${itemList.index}</td>
-                        <td>${item.xbrlTableTitle}</td>
-                        <td>${item.xbrlTableDescription}</td>
-                    </tr>
-                </sly>
-            </tbody>
-        </table>
-        <div class="button-container">
-        	<button id="loadMoreBtn">VIEW ALL</button>
-        </div>
+
+<div data-sly-use.myDataModel="com.site.myproj.core.models.PdfListModel">
+	<div class="disclosure-list" data-sly-list.doc="${myDataModel.documents}" data-disclosureList="${myDataModel.documents}">
+		<div class="doc-item">
+			<img src="/content/dam/mysite/pdf-icon.png" alt="PDF" class="pdf-logo">
+			<a href="${doc.path}">${doc.title}</a>
+		</div>
+    </div>
 </div>
 
 <sly data-sly-use.template="core/wcm/components/commons/v1/templates.html"
