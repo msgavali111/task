@@ -1,18 +1,22 @@
 <sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html">
-  <sly data-sly-call="${clientlib.all @ categories='xbrlDocList'}">
+  <sly data-sly-call="${clientlib.all @ categories='globalcoredocumentataionTitle'}">
   </sly> 
 </sly>
 
 
-<div data-sly-use.myDataModel="com.site.myproj.core.models.PdfListModel">
-	<div class="disclosure-list" data-sly-list.doc="${myDataModel.documents}" data-disclosureList="${myDataModel.documents}">
-		<div class="doc-item">
-			<img src="/content/dam/mysite/pdf-icon.png" alt="PDF" class="pdf-logo">
-			<a href="${doc.path}">${doc.title}</a>
-		</div>
-    </div>
+<div class="cmp-title">
+   <h2 class="cmp-title__heading"> ${properties.title} <span class="cmp-title__version"> ${properties.version} </span></h2>
 </div>
 
-<sly data-sly-use.template="core/wcm/components/commons/v1/templates.html"
-	data-sly-call="${template.placeholder @ isEmpty=!exists}">
-</sly>
+
+.cmp-title__heading{   
+    font-size: 50px;
+    font-family: "Open Sans", sans-serif;
+    color: #074173;  
+    font-weight: 100;
+}
+
+.cmp-title__version{
+    color: rgb(184, 186, 188);
+    font-size: 29px;
+}
