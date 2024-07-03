@@ -1,3 +1,29 @@
+<sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html">
+  <sly data-sly-call="${clientlib.all @ categories='bestPractices'}">
+  </sly>
+</sly>
+
+
+	<div class="cmp_best_practices_card" data-sly-use.model="com.site.myproj.core.models.BestPracticesMultifieldModel">
+        <div class="cmp_best_practices_card-title">
+            <p>${properties.heading}</p>
+        </div>
+        <div class="cmp_best_practices_card-list">       
+            <ul>
+            	<sly data-sly-list.item="${model.itemDetails}">
+                    <li>${item}</li>
+				<sly>
+            </ul>
+        </div>
+    </div> 
+
+<sly data-sly-use.template="core/wcm/components/commons/v1/templates.html"
+	data-sly-call="${template.placeholder @ isEmpty=!exists}">
+</sly>    
+
+
+
+
 .cmp_best_practices_card {
     width: 395px;
     height: 100%;
