@@ -1,73 +1,77 @@
-body {
-    font-family: "Poppins";
+.cmp_best_practices_card {
+    width: 395px;
+    height: 100%;
+    background-color: rgba(233, 230, 230, 0.934);
+    padding: 1rem 2rem 1rem 0.5rem;
+
 }
 
-.table-container {
-    max-width: 100%;
-    
+.cmp_best_practices_card--do-variation{
+
+    .cmp_best_practices_card {
+        border-top: 5px solid rgb(39, 172, 39);
+        margin-top: 4rem;
+    }
+
+
+    .cmp_best_practices_card-title {
+        text-align: center;
+        color: rgb(39, 172, 39);
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    ul li::before {
+        content: url('/content/dam/mysite/icons8-done-17.png');
+        position: absolute;
+        left: 0;
+        top: 0.3em; /* Adjust this value to move the icon up or down */
+        width: 17px; /* Adjust to match the icon size */
+        height: 17px; /* Adjust to match the icon size */
+    }
+}
+
+.cmp_best_practices_card--dont-variation{
+
+    .cmp_best_practices_card {
+        border-top: 5px solid rgb(227, 41, 8);
+        margin-top: 4rem;
+    }
+
+    .cmp_best_practices_card-title {
+        text-align: center;
+        color: rgb(227, 41, 8);
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    ul li::before {
+        content: url('/content/dam/mysite/icons8-cross-17.png');
+        position: absolute;
+        left: 0;
+        top: 0.3em; /* Adjust this value to move the icon up or down */
+        width: 17px; /* Adjust to match the icon size */
+        height: 17px; /* Adjust to match the icon size */
+    }
+}
+
+ul {
+    list-style: none;
+    padding-left: 1.5em; /* Adjust padding to fit the icon */
+    font-size: 14px;
+}
+
+ul li {
     position: relative;
+    padding-left: 1.5em; /* Adjust padding to fit the icon */
+    margin-bottom: 1rem;
 }
 
-table {
-    width: 100%;
-    border-collapse: separate; /* Change collapse to separate */
-    border-spacing: 0 4px; /* Adds 20px spacing between rows */
+ul li::before {
+    content: url('/content/dam/mysite/icons8-done-17.png');
+    position: absolute;
+    left: 0;
+    top: 0.3em; /* Adjust this value to move the icon up or down */
+    width: 17px; /* Adjust to match the icon size */
+    height: 17px; /* Adjust to match the icon size */
 }
-
-thead {
-    background-color: #ffffff;
-}
-
-th:nth-child(1) {
-    width: 7%; /* Adjust width for the first column */
-}
-
-th:nth-child(2) {
-    width: 23%; /* Adjust width for the second column */
-}
-
-th:nth-child(3) {
-    width: 70%; /* Adjust width for the third column */
-}
-
-th, td {
-    padding: 20px;
-    border: none;
-    text-align: left;
-    vertical-align: top;
-}
-
-tbody tr {
-    background-color: #E7EDF4;
-
-}
-
-.hidden {
-    display: none;
-}
-
-button {
-	margin-top: 0.5rem;
-    width: 99px;
-    height: 32px;
-	opacity: 1;
-    color: #127ABF;
-    border: 1px solid #127ABF;
-    cursor: pointer;
-	font-size: 14px;
-    border-radius: 3px;
-    font-weight: bold;
-    background-color: #ffffff;
-}
-
-button:hover {
-    background-color: #127ABF;
-    color: #ffffff;
-}
-
-.button-container {
-    display: flex;
-    justify-content: flex-end;
-
-}
-
