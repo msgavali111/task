@@ -1,89 +1,98 @@
-<sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html">
-  <sly data-sly-call="${clientlib.all @ categories='globalcoredocumentataionTitle'}">
-  </sly> 
-</sly>
+	<div class="document-list">
+        <table>
+        	<tbody id="document-list-tbody">
+               
+            <tbody>
+        </table>
+    </div>
 
 
-<div class="cmp-title">
-   <h2 class="cmp-title__heading"> ${properties.title} <span class="cmp-title__version"> ${properties.version} </span></h2>
-</div>
+
+css
 
 
-.cmp-title__heading{   
-    font-size: 50px;
-    font-family: "Open Sans", sans-serif;
-    color: #074173;  
-    font-weight: 100;
+
+table {
+    border-collapse: collapse;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: #333333;
 }
 
-.cmp-title__version{
-    color: rgb(184, 186, 188);
-    font-size: 29px;
+
+
+td {
+    width: 551px;
+    height: 51px;
+    word-wrap: break-word;    
+
 }
 
-<sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html">
-  <sly data-sly-call="${clientlib.all @ categories='globalcoredocumentataionCard'}">
-  </sly>
-</sly>
+tr {
+    
+    line-height: 1.3;
+}
 
-
-<a href="${properties.url}" target="_blank" class="card">
-  <div class="card-image">
-    <img src="${properties.cardImagePath}" alt="Opps!" class="card-icon">
-  </div>
-
-  <div class="card-content">
-    <h3 class="card-title">${properties.title}</h3>
-    <p class="card-description">${properties.subTitle}</p>
-  </div>
-</a>
-
-
-.card {
-    display: flex;
-    align-items: center;
-    background-color: white;
-    border: 1px solid #d7d6d6;  
-    border-radius: 8px;
-    max-width: 345px;
-    width: 100%;
+td a {
+    background-color: #E7EDF4;
+    width: 523px;
+    color: #333333;
     text-decoration: none;
-}
-
-.card-icon {
-    width: 40px;
-    height: 40px;
-    padding-top: 7px;
-}
-
-.card-content {
-    display: flex;
-    flex-direction: column;
-    padding: 15px;
-}
-
-.card-title {
-    margin: 0;
+    display: block;     
+    box-sizing: border-box;
+    margin-top: 14px;
+    margin-left: 4px;
     font-size: 16px;
-    font-weight: bold;
-    color: black;
 }
 
-.card-description {
-    margin: 5px 0 0 0;
-    font-size: 14px;
-    color: #666;
+.td-div{
+    display: flex;
+    flex-direction: row;
+    background-color: #E7EDF4;
+    width: 534px;
+    height: 48px;
 }
 
-.card-image{
-    background-color: #f6f4f4;
-    padding: 15px;
-    height: 54px;
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
+.td-div img{
+
+    height: 28px;
+    margin-top: 9px;
+    margin-left: 15px;
 }
 
-.card:hover{
 
-    border: 1px solid rgb(99, 98, 98);
+js
+
+document.addEventListener('DOMContentLoaded', function() {
+    var disclosureList = "Are Not FDIC ,Are Not FDIC Insured ,Are Not Bank Guaranteed,May Lose Value,Are Not Deposits,Are Not Insured by Any Federal Government Agency,Are Not a Condition to Any Banking Service or Activity,Disclosure one, Are Not FDIC Insured,Are Not Bank Guaranteed,May Lose Value,Are Not Deposits,Are Not Insured by Any Federal Government Agency,Are Not a Condition to Any Banking Service or Activity,Disclosure one";    
+    buildDisclosureTable(disclosureList);
+});
+function buildDisclosureTable(disclosureList) {
+    var items = disclosureList.split(',');
+
+    var tbody = document.getElementById('document-list-tbody');
+
+    for (var i = 0; i < items.length; i++) {
+        if (i % 2 === 0) {
+            var row = tbody.insertRow();
+        }
+
+        var cell = row.insertCell();
+
+        var div = document.createElement('div');
+        div.className = "td-div";
+
+        var img = document.createElement('img');
+        img.src = 'icons8-pdf-96.png'; // Set the path to your image
+        img.alt = 'PDF Icon'; // Set an appropriate alt text
+
+        var link = document.createElement('a');
+        link.href = '#'; // Set the URL you want the link to point to
+        link.textContent = items[i].trim();
+
+        div.appendChild(img);
+        div.appendChild(link);         
+        cell.appendChild(div);
+        
+    }
+
 }
