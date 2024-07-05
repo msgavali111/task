@@ -1,21 +1,58 @@
-        try {
-            // Parse the srExpiryDateString to Date
-            Date srExpiryDate = inputFormatter.parse(srExpiryDateString);
+package com.site.myproj.core.models;
 
-            // Get the current date and format it
-            Date currentDate = new Date();
-            String currentDateString = outputFormatter.format(currentDate);
-            Date formattedCurrentDate = outputFormatter.parse(currentDateString);
+import java.util.List;
 
-            // Calculate the final expiry date by adding 7 days to the current date
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(formattedCurrentDate);
-            calendar.add(Calendar.DAY_OF_MONTH, 7);
-            Date finalExpiryDate = calendar.getTime();
+public interface BestPracticesMultifieldModel {
 
-            // Check if the final expiry date is before the srExpiryDate
-            if (finalExpiryDate.before(srExpiryDate)) {
-                System.out.println("hello");
-            }cache(){
+    List<String> getItemDetails();
+}
 
+
+package com.site.myproj.core.models.impl;
+
+
+import com.site.myproj.core.models.BestPracticesMultifieldModel;
+import com.site.myproj.core.models.SingleItemInMultifieldModel;
+import org.apache.sling.api.SlingHttpServletRequest;
+import org.apache.sling.api.resource.Resource;
+import org.apache.sling.models.annotations.DefaultInjectionStrategy;
+import org.apache.sling.models.annotations.Model;
+import org.apache.sling.models.annotations.injectorspecific.SlingObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Model(
+        adaptables = SlingHttpServletRequest.class,
+        adapters = BestPracticesMultifieldModel.class,
+        defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL
+)
+public class BestPracticesMultifieldModelImpl implements BestPracticesMultifieldModel {
+
+    private static final Logger LOG = LoggerFactory.getLogger(BestPracticesMultifieldModelImpl.class);
+
+    @SlingObject
+    Resource componentResource;
+
+    @Override
+    public List<String> getItemDetails() {
+
+        List<String> itemsList = new ArrayList<>();
+        Resource resource = componentResource.getChild("itemDetails");
+        LOG.debug("Resource >> {}", resource);
+
+        try{
+            if(resource != null){
+                for(Resource item : resource.getChildren()){
+                    itemsList.add(item.getValueMap().get("listItem", String.class));
+                }
             }
+        }catch (Exception e){
+            LOG.debug("<< Error occured during BestPracticesMultifieldModelImpl Implementation >> {}", e.getMessage());
+        }
+        LOG.debug("Item List >> {}", itemsList);
+        return itemsList;
+    }
+}
