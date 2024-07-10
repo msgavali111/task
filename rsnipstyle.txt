@@ -11,7 +11,6 @@
 css
 
 
-
 table {
     border-collapse: collapse;
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
@@ -21,10 +20,10 @@ table {
 
 
 td {
-    width: 551px;
-    height: 51px;
-    word-wrap: break-word;    
-
+    width: 282px;
+    height: 95px;
+    word-wrap: break-word;   
+    padding: 4px; 
 }
 
 tr {
@@ -34,12 +33,12 @@ tr {
 
 td a {
     background-color: #E7EDF4;
-    width: 523px;
+    width: 282px;
     color: #333333;
     text-decoration: none;
     display: block;     
     box-sizing: border-box;
-    margin-top: 14px;
+    margin-top: 40px;
     margin-left: 4px;
     font-size: 16px;
 }
@@ -48,22 +47,21 @@ td a {
     display: flex;
     flex-direction: row;
     background-color: #E7EDF4;
-    width: 534px;
-    height: 48px;
+    width: 282px;
+    height: 95px;
+    border-radius:5px;
 }
 
 .td-div img{
 
-    height: 28px;
-    margin-top: 9px;
+    height: 26px;
+    margin-top: 36px;
     margin-left: 15px;
 }
 
-
 js
-
 document.addEventListener('DOMContentLoaded', function() {
-    var disclosureList = "Are Not FDIC ,Are Not FDIC Insured ,Are Not Bank Guaranteed,May Lose Value,Are Not Deposits,Are Not Insured by Any Federal Government Agency,Are Not a Condition to Any Banking Service or Activity,Disclosure one, Are Not FDIC Insured,Are Not Bank Guaranteed,May Lose Value,Are Not Deposits,Are Not Insured by Any Federal Government Agency,Are Not a Condition to Any Banking Service or Activity,Disclosure one";    
+    var disclosureList = "Template, Template, Template, Template, Template, Template, Template, Template, Template, Template, ";    
     buildDisclosureTable(disclosureList);
 });
 function buildDisclosureTable(disclosureList) {
@@ -72,7 +70,7 @@ function buildDisclosureTable(disclosureList) {
     var tbody = document.getElementById('document-list-tbody');
 
     for (var i = 0; i < items.length; i++) {
-        if (i % 2 === 0) {
+        if (i % 3 === 0) {
             var row = tbody.insertRow();
         }
 
