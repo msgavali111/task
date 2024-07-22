@@ -1,1 +1,130 @@
-mvn -B archetype:generate -D archetypeGroupId=com.adobe.aem -D archetypeArtifactId=aem-project-archetype -D archetypeVersion=43 -D appTitle="India Times" -D appId="indiatimes" -D groupId="com.aem.indiatimes" -D artifactId="india-times" -D version="0.0.1-SNAPSHOT" -D aemVersion="6.5" -D includeDispatcherConfig=n -D includeExamples=n -DfrontendModule=none
+action link css
+
+.footer-action-link {
+    color: #fff;
+    background-color: #012169;
+    font-size: 16px;
+    width: 100%;
+    height: 150px;
+    font-family: Roboto;
+    text-align: center;
+}
+
+.text-center {
+    text-align: center !important;
+    padding: 1.3rem 2rem 1rem 2rem;
+}
+
+.footer-action-link ul {
+    line-height: 20px;
+    margin-left: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.footer-action-link .li {
+    display: inline-flex;
+    list-style-type: none;
+    align-items: center;
+}
+
+.footer-action-link .li a {
+    color: #fff;
+    display: inline-block;
+    margin-bottom: 2px;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+.footer-action-link .li a:hover {
+    text-decoration: underline;
+}
+
+.footer-action-link .li::after {
+    background-image: url('/content/dam/mysite/separator.svg');
+    background-position: 50%;
+    background-repeat: no-repeat;
+    padding: 0px 0px 16px 1px;
+    content: " ";
+    display: inline-block;
+    margin: 0px 9px 3px 9px;
+}
+
+.footer-action-link .li:last-child::after {
+    content: none;
+}
+
+/* Responsive styles */
+@media (max-width: 1200px) {
+    .footer-action-link ul {
+        padding: 0;
+    }
+}
+
+@media (max-width: 992px) {
+    .footer-action-link ul {
+        padding: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .footer-action-link {
+        height: auto;
+        padding: 10px 0;
+    }
+
+    .footer-action-link ul {
+        padding: 0 30px;
+    }
+
+    .footer-action-link .li {
+        display: flex;
+        margin-bottom: 10px;
+    }
+
+    .footer-action-link .li::after {
+        content: " ";
+    }
+}
+
+@media (max-width: 576px) {
+    .footer-action-link ul {
+        padding: 0 15px;
+    }
+
+    .footer-action-link .li a {
+        font-size: 16px;
+    }
+}
+
+
+HTL
+
+
+<sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html">
+  <sly data-sly-call="${clientlib.all @ categories='globalfooteractionlinks'}">
+  </sly> 
+</sly>
+
+
+<div class="footer-action-link" data-sly-use.model="com.site.myproj.core.models.GlobalFooterActionLinks">
+
+	<div class="text-center">    
+    	<ul>
+        	<sly data-sly-list="${model.actionLinkItems}">
+                <li class="li">
+                    <a href="${item.actionLinkPath}">
+    					${item.actionLinkTitle}
+                    </a>
+                </li>
+             </sly>     
+		</ul>
+    </div>  
+
+</div>
+
+<sly data-sly-use.template="core/wcm/components/commons/v1/templates.html"
+	data-sly-call="${template.placeholder @ isEmpty=!exists}">
+</sly>
