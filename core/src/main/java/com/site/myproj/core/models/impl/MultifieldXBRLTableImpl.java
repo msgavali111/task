@@ -1,0 +1,59 @@
+package com.site.myproj.core.models.impl;
+
+import com.site.myproj.core.models.MultifieldXBRLTableModel;
+import com.site.myproj.core.models.MultifieldXBRLTableModel;
+import org.apache.sling.api.SlingHttpServletRequest;
+import org.apache.sling.api.resource.Resource;
+import org.apache.sling.models.annotations.Default;
+import org.apache.sling.models.annotations.DefaultInjectionStrategy;
+import org.apache.sling.models.annotations.Model;
+import org.apache.sling.models.annotations.Via;
+import org.apache.sling.models.annotations.injectorspecific.SlingObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@Model(
+      adaptables = SlingHttpServletRequest.class,
+      adapters = MultifieldXBRLTableModel.class,
+      defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL
+)
+
+public class MultifieldXBRLTableImpl implements MultifieldXBRLTableModel {
+
+    private static final Logger LOG = LoggerFactory.getLogger(MultifieldXBRLTableImpl.class);
+
+    @SlingObject
+    private Resource componentResource;
+
+    @Override
+    public List<Map<String, String>> getXbrlTableDetails() {
+
+        List<Map<String,String>> xbrlTableDetailsMap = new ArrayList<>();
+        try{
+            LOG.debug("Component Resource>> {}", componentResource.getPath());
+            Resource xbrlTableParentNode = componentResource.getChild("xbrlTableDetails");
+            LOG.debug("xbrlTableParentNode >> {}", xbrlTableParentNode);
+            if(xbrlTableParentNode != null){
+                for( Resource xbrlTableItem : xbrlTableParentNode.getChildren()){
+
+                    Map<String, String> tableMap = new HashMap<>();
+
+                    tableMap.put("xbrlTableTitle",xbrlTableItem.getValueMap().get("xbrlTableTitle", String.class));
+                    tableMap.put("xbrlTableDescription",xbrlTableItem.getValueMap().get("xbrlTableDescription", String.class));
+
+                    xbrlTableDetailsMap.add(tableMap);
+                }
+            }
+        }catch ( Exception e){
+            LOG.debug("<< Error occured during MultifieldXBRLTableImpl Implementation >> {}", e.getMessage());
+        }
+
+        return xbrlTableDetailsMap;
+    }
+}

@@ -1,0 +1,44 @@
+.cmp-container{
+
+    margin-top:10px;  
+
+}
+
+.cmp-navigation{
+    padding-top:3px;
+    width: auto;
+	float: right;
+    padding-right: 1rem;
+}
+.cmp-navigation__group{
+
+    list-style:none;
+    margin:0;
+	float: right;    
+}
+.cmp-navigation__item{
+    display:block;
+    float:left;
+	padding: 9px;
+}
+.cmp-navigation__item-link{
+    color:#202020;
+    font-size:16px;
+    padding:15px 17px;
+    text-decoration:none;
+    text-transform:uppercase
+}
+
+.cmp-navigation__item:hover{
+
+	.cmp-navigation__item-link{
+				color: #ffff;            	
+    }  
+	transition: 1s;
+	background-color: #C70039;
+
+}
+
+.cmp-navigation__item--active{
+	border-bottom: 1px solid red;
+}

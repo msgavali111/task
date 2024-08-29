@@ -1,0 +1,29 @@
+<sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html">
+  <sly data-sly-call="${clientlib.all @ categories='nestedMultifield'}">
+  </sly> 
+</sly>
+
+<p><------------Multifield Values -------></p>
+
+<div data-sly-use.model="com.site.myproj.core.models.NestedMultifieldUsingMapAndBeanModel">
+	<div data-sly-list.item="${model.nestedBookDetailsBean}">
+        <p>${item.bookName}</p>
+        <p>${'MMM dd,yyyy' @ format=item.bookPublishDate}</p>
+        <p>${item.bookCopies}</p>
+    </div>    
+
+<p><------------Nested Multifield Values -------></p>
+
+	<div data-sly-list.item="${model.multifieldItems}">
+        <p>${item.bookName}</p>
+        <p>${'MMM dd,yyyy' @ format=item.bookPublishDate}</p>
+        <p>${item.bookCopies}</p>
+    </div>    
+</div>
+
+
+
+
+<sly data-sly-use.template="core/wcm/components/commons/v1/templates.html"
+	data-sly-call="${template.placeholder @ isEmpty=!exists, classAppend='cmp-nestedMultifield', emptyTextAppend='Author'}">
+</sly>
