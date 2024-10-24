@@ -1,130 +1,79 @@
-action link css
+From: ${senderEmailAddress}
+Subject: ${subject}
 
-.footer-action-link {
-    color: #fff;
-    background-color: #012169;
-    font-size: 16px;
-    width: 100%;
-    height: 150px;
-    font-family: Roboto;
-    text-align: center;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Confirmation</title>
+    <style>
+        /* General styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f0f4f8, #d9e6f2); /* Gradient background */
+        }
 
-.text-center {
-    text-align: center !important;
-    padding: 1.3rem 2rem 1rem 2rem;
-}
+        /* Email container */
+        .email-container {
+            width: 100%;
+            max-width: 100%;
+            margin: 30px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
 
-.footer-action-link ul {
-    line-height: 20px;
-    margin-left: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-}
+        /* Header Section */
+        .email-header {
+            background-color: #007BFF;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+        }
 
-.footer-action-link .li {
-    display: inline-flex;
-    list-style-type: none;
-    align-items: center;
-}
+        /* Body Section */
+        .email-body {
+            padding: 20px;
+            color: #333;
+            line-height: 1.6;
+        }
 
-.footer-action-link .li a {
-    color: #fff;
-    display: inline-block;
-    margin-bottom: 2px;
-    white-space: nowrap;
-    text-decoration: none;
-}
+        /* Footer Section */
+        .email-footer {
+            text-align: center;
+            padding: 15px;
+            font-size: 0.9em;
+            color: #555;
+            background-color: #f0f0f0;
+        }
 
-.footer-action-link .li a:hover {
-    text-decoration: underline;
-}
+    </style>
+</head>
+<body>
 
-.footer-action-link .li::after {
-    background-image: url('/content/dam/mysite/separator.svg');
-    background-position: 50%;
-    background-repeat: no-repeat;
-    padding: 0px 0px 16px 1px;
-    content: " ";
-    display: inline-block;
-    margin: 0px 9px 3px 9px;
-}
+    <div class="email-container">
+        <!-- Header Section -->
+        <div class="email-header">
+            <h1 style="margin: 0;">Confirmation Email</h1>
+        </div>
 
-.footer-action-link .li:last-child::after {
-    content: none;
-}
+        <!-- Body Section -->
+        <div class="email-body">
+            <p>Hello <strong>${recipientName}</strong>,</p>
+            <p>Thank you for submitting your form! We have successfully received your submission.</p>
+            <p>Please find the relevant attachments below.</p>
+        </div>
 
-/* Responsive styles */
-@media (max-width: 1200px) {
-    .footer-action-link ul {
-        padding: 0;
-    }
-}
+        <!-- Footer Section -->
+        <div class="email-footer">
+            <p>&copy; 2024 Your Company. All rights reserved.</p>
+        </div>
+    </div>
 
-@media (max-width: 992px) {
-    .footer-action-link ul {
-        padding: 0;
-    }
-}
-
-@media (max-width: 768px) {
-    .footer-action-link {
-        height: auto;
-        padding: 10px 0;
-    }
-
-    .footer-action-link ul {
-        padding: 0 30px;
-    }
-
-    .footer-action-link .li {
-        display: flex;
-        margin-bottom: 10px;
-    }
-
-    .footer-action-link .li::after {
-        content: " ";
-    }
-}
-
-@media (max-width: 576px) {
-    .footer-action-link ul {
-        padding: 0 15px;
-    }
-
-    .footer-action-link .li a {
-        font-size: 16px;
-    }
-}
-
-
-HTL
-
-
-<sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html">
-  <sly data-sly-call="${clientlib.all @ categories='globalfooteractionlinks'}">
-  </sly> 
-</sly>
-
-
-<div class="footer-action-link" data-sly-use.model="com.site.myproj.core.models.GlobalFooterActionLinks">
-
-	<div class="text-center">    
-    	<ul>
-        	<sly data-sly-list="${model.actionLinkItems}">
-                <li class="li">
-                    <a href="${item.actionLinkPath}">
-    					${item.actionLinkTitle}
-                    </a>
-                </li>
-             </sly>     
-		</ul>
-    </div>  
-
-</div>
-
-<sly data-sly-use.template="core/wcm/components/commons/v1/templates.html"
-	data-sly-call="${template.placeholder @ isEmpty=!exists}">
-</sly>
+</body>
+</html>
